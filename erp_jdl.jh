@@ -1,0 +1,215 @@
+
+entity Student{
+    firstName String
+    lastName String
+    gender String
+    bloodGroup String  //MasterLookup Value
+    studentUniqueId String //needs to be unique but school-wise so we can handle it through the code
+    dateOfBirth LocalDate
+    foodProgram String  //MasterLookup value like free, reduced, paid, Not claimable 
+    enrollmentDate Instant
+    graduationDate Instant
+    profileStatus String  //MasterLookup values like active, Inactive, Onhold, Graduate
+    allergies String
+    medications String
+    dietRestriction String
+    note String
+    roomId Long
+    status String
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity Guardian{
+    firstName String
+    lastName String
+    email String
+    phoneNumber String 
+    relation String //MasterLookup values like father, mother, guardian, grandparents
+    emergencyContact Boolean
+    inviteFlag Boolean
+    signInPin Long
+    studentId Long
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity AuthorizedPickup{
+    firstName String
+    lastName String
+    phoneNumber String 
+    relation String //MasterLookup values like brother, sister, friend, carpool 
+    emergencyContact Boolean
+    signInPin Long
+    studentId Long
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity Physicians{
+    firstName String
+    lastName String
+    email String
+    phoneNumber String 
+    type String //MasterLookup values like Primary, Care Provider
+    note String
+    studentId Long
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+
+entity Address {
+    line String
+    country String
+    state  String
+    city String
+    zipcode String
+    refTable String
+    refTableId Long
+    schoolId Long
+   status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+
+entity Room{ 
+    name String
+    maxCapacity Long
+    ageRang String
+    roomNumber Long 
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity Tag{
+    name String
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity Staff{
+    name String
+    employeeId String
+    email String
+    phoneNumber String 
+    clockInPin String
+    allowedStudentRatio Long
+    hireDate Instant
+    inviteStatus String //MasterLookup values like invited, signed up
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+//-------Tables related to the setting data----
+
+entity School{
+    name String
+    schoolType String
+    enrollNumber Long
+    email String
+    einTax String
+    timeZone String // Master-lookup Value 
+    phoneNumber String
+    websiteUrl String 
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity MasterLookup{
+    name String
+    value String
+    valueTwo String
+    description String
+    type String    //MasterLookup value
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity FormValidator{
+    type String // required or pattern from MasterLookup value
+    value String
+    formName String
+    fieldName String
+    schoolId Long
+    status String
+    lastModified Instant
+    lastModifiedBy String
+    createdby String
+    createdFrom Instant
+    
+}
+// For user we are going to update  techvg_user
+entity TechvgUser { // we are going to modify existing entity "techvg_user" for user
+   firstName String
+    lastName String
+    email String required unique
+    login String required unique
+    refTable String
+    refTableId Long
+    activated Boolean
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+}
+
+
+entity TechvgRole { // we are going to modify existing entity "techvg_authority" for role
+	name String required unique
+	description String
+        status String
+        schoolId Long
+        lastModified Instant
+	lastModifiedBy String
+}
+
+entity TechvgPermission{
+	name String required unique
+	description String
+        status String
+        schoolId Long
+        lastModified Instant
+	lastModifiedBy String
+}
+
+relationship ManyToMany {
+    Student{tag(tagName)} to Tag{student(firstName)}
+    Staff{room(name)} to Room{staff(firstName)}
+     Student{student(firstName)} to Student{student(firstName)} 
+  }
+
+relationship ManyToMany {
+    TechvgRole{techvgPermission(name)} to TechvgPermission{techvgRole(name)}
+  }
+
+
+  // Set pagination options
+paginate * with infinite-scroll
+paginate * with pagination
+
+// Use Data Transfert Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service * with serviceClass
+
+filter *
+// Set an angular suffix
+// angularSuffix * with tvg
