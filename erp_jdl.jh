@@ -152,9 +152,6 @@ entity FormValidator{
     status String
     lastModified Instant
     lastModifiedBy String
-    createdby String
-    createdFrom Instant
-    
 }
 // For user we are going to update  techvg_user
 entity TechvgUser { // we are going to modify existing entity "techvg_user" for user
@@ -190,7 +187,7 @@ entity TechvgPermission{
 }
 
 relationship ManyToMany {
-    Student{tag(tagName)} to Tag{student(firstName)}
+    Student{tag(name)} to Tag{student(firstName)}
     Staff{room(name)} to Room{staff(firstName)}
      Student{student(firstName)} to Student{student(firstName)} 
   }
