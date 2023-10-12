@@ -1,0 +1,49 @@
+{
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "template_component",
+  "fields": [
+    {
+      "fieldName": "componentType",
+      "fieldType": "ComponentType",
+      "fieldValues": "HEADER (Header),TEXT (Text),IMAGE (Image),ATTACHMENT (Attachment)"
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sequenceNumber",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "refTable",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "refTableId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "schoolId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "lastModified",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "TemplateComponent",
+  "pagination": "pagination",
+  "relationships": [],
+  "service": "serviceClass"
+}

@@ -1,0 +1,104 @@
+{
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "student",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "bloodGroup",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "studentUniqueId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "foodProgram",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "enrollmentDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "graduationDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "profileStatus",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allergies",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "medications",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dietRestriction",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "note",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "roomId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "schoolId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "lastModified",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "hasPrivateChat",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "privatedByGuardian",
+      "fieldType": "Long"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Student",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "student",
+      "relationshipName": "event",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

@@ -1,3 +1,73 @@
+// New entities for sprint 7
+
+entity TemplateComponent{
+    componentType ComponentType
+    content String // it will contain text hedding and fileUuid for image and attachement
+    sequenceNumber Long
+    refTable String // it should be newsletter or template
+    refTableId Long
+    status String
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+}
+ enum ComponentType {
+      HEADER(Header)
+ 	TEXT(Text),
+     IMAGE(Image),
+ ATTACHMENT(Attachment)
+     
+ }
+
+
+entity Event {
+    name String
+    eventType String
+    date Instant
+    startTime String
+    endTime String
+    hasfullDay Boolean
+    details String
+    colorCode String
+    roomId Long 
+    status String
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity Lead{
+    firstName String
+    lastName String
+    dateOfBirth LocalDate
+    allergy String
+    expectedStart Instant
+    isExpectingMother Boolean
+    leadStatus String  // lookup value like waitlisted, admitted, toured, interested, enrolled
+    note String
+    leadSource String // lookup value like Advertising, event, internet etc.
+    roomId Long 
+    createDate Instant
+    amount String 
+    status String
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+}
+
+entity LeadParent{
+    firstName String
+    lastName String
+    email String
+    phoneNumber Long
+    leadId Long
+    status String
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+}
+
+// below entities have changes 
 
 entity Student{
     firstName String
@@ -19,184 +89,63 @@ entity Student{
     schoolId Long
     lastModified Instant
     lastModifiedBy String
+// new field added for handling private messages of guardians
+    hasPrivateChat Boolean
+    privatedByGuardian Long
+
 }
 
-entity Guardian{
-    firstName String
-    lastName String
-    email String
-    phoneNumber String 
-    relation String //MasterLookup values like father, mother, guardian, grandparents
-    emergencyContact Boolean
-    inviteFlag Boolean
-    signInPin Long
+entity Newsletter {
+    title String
+    text String
+    attachment String
+  //  senderRefTable String  //removed for sender because sender will be always staff
+  //  senderRefId Long   //removed for sender because sender wi
+    receiverRefTable String
+  //  receiverRefId Long   //removed for reciver because reciver will be multiple
+    templateId Long
+    status String
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+// new field added for handling for news letter
+    letterStatus String // lookup value like draft, scheduled, sent
+    emailToReply String
+    senderStaffId Long
+    
+}
+
+entity Template {
+    title String
+    text String
+  //  attachment String  //removed because attachment will be multiple
+    status String
+    schoolId Long
+    lastModified Instant
+    lastModifiedBy String
+   // new field added for handling for template
+    hasDefaultTemp Boolean
+}
+
+entity Schedule{
+    day String
+    amTime String
+    pmTime String
+    status String
+    schoolId Long
     studentId Long
-    schoolId Long
-    status String
     lastModified Instant
     lastModifiedBy String
-}
-
-entity AuthorizedPickup{
-    firstName String
-    lastName String
-    phoneNumber String 
-    relation String //MasterLookup values like brother, sister, friend, carpool 
-    emergencyContact Boolean
-    signInPin Long
-    studentId Long
-    schoolId Long
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-entity Physicians{
-    firstName String
-    lastName String
-    email String
-    phoneNumber String 
-    type String //MasterLookup values like Primary, Care Provider
-    note String
-    studentId Long
-    schoolId Long
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-
-entity Address {
-    line String
-    country String
-    state  String
-    city String
-    zipcode String
-    refTable String
-    refTableId Long
-    schoolId Long
-   status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-
-entity Room{ 
-    name String
-    maxCapacity Long
-    ageRang String
-    roomNumber Long 
-    schoolId Long
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-entity Tag{
-    name String
-    schoolId Long
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-entity Staff{
-    name String
-    employeeId String
-    email String
-    phoneNumber String 
-    clockInPin String
-    allowedStudentRatio Long
-    hireDate Instant
-    inviteStatus String //MasterLookup values like invited, signed up
-    schoolId Long
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-//-------Tables related to the setting data----
-
-entity School{
-    name String
-    schoolType String
-    enrollNumber Long
-    email String
-    einTax String
-    timeZone String // Master-lookup Value 
-    phoneNumber String
-    websiteUrl String 
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-entity MasterLookup{
-    name String
-    value String
-    valueTwo String
-    description String
-    type String    //MasterLookup value
-    schoolId Long
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-
-entity FormValidator{
-    type String // required or pattern from MasterLookup value
-    value String
-    formName String
-    fieldName String
-    schoolId Long
-    status String
-    lastModified Instant
-    lastModifiedBy String
-}
-// For user we are going to update  techvg_user
-entity TechvgUser { // we are going to modify existing entity "techvg_user" for user
-   firstName String
-    lastName String
-    email String required unique
-    login String required unique
-    refTable String
-    refTableId Long
-    activated Boolean
-    schoolId Long
-    lastModified Instant
-    lastModifiedBy String
-}
-
-
-entity TechvgRole { // we are going to modify existing entity "techvg_authority" for role
-	name String required unique
-	description String
-        status String
-        schoolId Long
-        lastModified Instant
-	lastModifiedBy String
-}
-
-entity TechvgPermission{
-	name String required unique
-	description String
-        status String
-        schoolId Long
-        lastModified Instant
-	lastModifiedBy String
 }
 
 relationship ManyToMany {
-    Student{tag(name)} to Tag{student(firstName)}
-    Staff{room(name)} to Room{staff(firstName)}
-     Student{student(firstName)} to Student{student(firstName)} 
-  }
+    Newsletter{template} to Template{newsletter}
+    Student{event} to Event{student}
+    Lead{schedule} to Schedule{lead}
+}
 
-relationship ManyToMany {
-    TechvgRole{techvgPermission(name)} to TechvgPermission{techvgRole(name)}
-  }
-
-
+ 
+ 
   // Set pagination options
 paginate * with infinite-scroll
 paginate * with pagination

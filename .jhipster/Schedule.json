@@ -1,0 +1,52 @@
+{
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "schedule",
+  "fields": [
+    {
+      "fieldName": "day",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "amTime",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pmTime",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "schoolId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "studentId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "lastModified",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Schedule",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "lead",
+      "otherEntityRelationshipName": "schedule",
+      "relationshipName": "lead",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}
